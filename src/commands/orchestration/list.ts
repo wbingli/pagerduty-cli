@@ -51,7 +51,10 @@ export default class OrchestrationList extends AuthenticatedBaseCommand<typeof O
       stopSpinnerWhenDone: false,
     })
     if (globalOrchestrations.length === 0) {
-      this.error('No global orchestrations found', { exit: 0 })
+      if (this.flags.json) {
+        await this.printJsonAndExit([])
+      }
+      return
     }
 
     const reqs: PD.Request[] = []

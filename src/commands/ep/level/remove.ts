@@ -99,7 +99,8 @@ export default class EpLevelRemove extends AuthenticatedBaseCommand<typeof EpLev
       })
     }
     if (requests.length === 0) {
-      this.error('Nothing to do.', { exit: 0 })
+      this.log('Nothing to do.')
+      return
     }
 
     r = await this.pd.batchedRequestWithSpinner(requests, {

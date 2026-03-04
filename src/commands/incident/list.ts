@@ -231,7 +231,10 @@ export default class IncidentList extends ListBaseCommand<typeof IncidentList> {
     })
 
     if (incidents.length === 0) {
-      this.error('No incidents found', { exit: 0 })
+      if (this.flags.json) {
+        await this.printJsonAndExit([])
+      }
+      return
     }
 
     if (this.flags.notes) {

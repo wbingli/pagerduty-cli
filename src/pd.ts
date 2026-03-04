@@ -275,6 +275,16 @@ export class PD {
   }
 
   private spinnerCallback = (p: PD.CallbackParams) => {
+    if (!this.debug) {
+      // Track state silently when not in debug mode
+      if (p.success) this.progressState.succeeded++
+      if (p.failure) this.progressState.failed++
+      if (p.failureMessage && !this.silent) {
+        log.error.bright.red(p.failureMessage)
+      }
+      return
+    }
+
     let updateStatusText = false
     if (p.start && !this.progressState.started) {
       this.progressState.failed = 0

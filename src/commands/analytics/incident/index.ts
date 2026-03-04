@@ -138,7 +138,10 @@ export default class AnalyticsIncident extends AuthenticatedBaseCommand<typeof A
     })
 
     if (analytics.length === 0) {
-      this.error('No analytics found', { exit: 0 })
+      if (this.flags.json) {
+        await this.printJsonAndExit([])
+      }
+      return
     }
 
     if (this.flags.json) {

@@ -95,7 +95,10 @@ export default class IncidentAlerts extends AuthenticatedBaseCommand<typeof Inci
     }
     CliUx.ux.action.stop(chalk.bold.green('done'))
     if (alerts.length === 0) {
-      this.error('No incidents found', { exit: 0 })
+      if (this.flags.json) {
+        await this.printJsonAndExit([])
+      }
+      return
     }
     if (this.flags.json) {
       await this.printJsonAndExit(alerts)
